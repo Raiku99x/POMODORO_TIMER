@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pomodoro Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-top">
+                <h1>🍅 Pomodoro Timer</h1>
+                <button id="darkModeToggle" class="icon-btn" title="Toggle Dark Mode">🌙</button>
+            </div>
+            <div class="mode-toggle">
+                <button id="workMode" class="active">Work</button>
+                <button id="breakMode">Break</button>
+                <button id="settingsBtn" class="settings-icon">⚙️</button>
+            </div>
+        </header>
+
+        <!-- Settings Panel -->
+        <div id="settingsPanel" class="settings-panel hidden">
+            <h3>⚙️ Timer Settings</h3>
+            <div class="setting-item">
+                <label for="workDuration">Work Duration (minutes):</label>
+                <input type="number" id="workDuration" min="1" max="60" value="25">
+            </div>
+            <div class="setting-item">
+                <label for="breakDuration">Break Duration (minutes):</label>
+                <input type="number" id="breakDuration" min="1" max="30" value="5">
+            </div>
+            <div class="setting-buttons">
+                <button id="saveSettings" class="btn btn-primary">Save</button>
+                <button id="cancelSettings" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+
+        <main>
+            <!-- Task List Section -->
+            <div class="task-section">
+                <h2>📝 Current Task</h2>
+                <div class="task-input-group">
+                    <input type="text" id="taskInput" placeholder="What are you working on?" maxlength="100">
+                    <button id="addTaskBtn" class="btn-icon">+</button>
+                </div>
+                <div id="taskList" class="task-list"></div>
+            </div>
+
+            <div class="timer-section">
+                <div class="timer-display" id="timerDisplay">25:00</div>
+                <div class="current-task-display" id="currentTaskDisplay">No task selected</div>
+                <div class="timer-controls">
+                    <button id="startBtn" class="btn btn-primary">Start</button>
+                    <button id="pauseBtn" class="btn btn-secondary" disabled>Pause</button>
+                    <button id="resetBtn" class="btn btn-secondary">Reset</button>
+                </div>
+                <div class="session-info">
+                    <p>Sessions Today: <span id="todaySessions">0</span></p>
+                    <p>Total Focus Time: <span id="totalTime">0h 0m</span></p>
+                </div>
+            </div>
+
+            <div class="stats-section">
+                <div class="stats-header">
+                    <h2>📊 Statistics</h2>
+                    <div class="view-toggle">
+                        <button id="weekView" class="active">Week</button>
+                        <button id="monthView">Month</button>
+                    </div>
+                </div>
+                <canvas id="statsChart" width="600" height="300"></canvas>
+                <div class="stats-summary">
+                    <div class="stat-card">
+                        <h3 id="periodSessions">0</h3>
+                        <p>Sessions</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="periodTime">0h</h3>
+                        <p>Focus Time</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3 id="bestDay">-</h3>
+                        <p>Best Day</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <audio id="notificationSound" preload="auto">
+        <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmwhBSuBzvLZiTYHGGm98OScTgwOUKzn77pjHQU2j9n0yoQtBSF0yPDilEILElyx6+ytWBUIQ5zd8sFuIwUrhc/z3I4yBxdnvO/mnlIQDlCq5+66Yx0FNo/Z9MqELQUhdMjw4pRCCxJcsevstVgVCEOc3fLBbiMFK4XP89yOMgcXZ7zv5p5SEA5Qqufuumcd" type="audio/wav">
+    </audio>
+
+    <script src="script.js"></script>
+</body>
+</html>
