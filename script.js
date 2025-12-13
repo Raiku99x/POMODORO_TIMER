@@ -32,9 +32,17 @@ const taskInput = document.getElementById('taskInput');
 const addTaskBtn = document.getElementById('addTaskBtn');
 const taskList = document.getElementById('taskList');
 const currentTaskDisplay = document.getElementById('currentTaskDisplay');
+const splashScreen = document.getElementById('splashScreen');
 
 // Initialize
 document.addEventListener('DOMContentLoaded', () => {
+    // Remove splash screen after animation TGhvZWwgTW9yaWxsbyAyMDI1
+    setTimeout(() => {
+        if (splashScreen) {
+            splashScreen.remove();
+        }
+    }, 3300);
+    
     loadSettings();
     loadDarkMode();
     loadTasks();
