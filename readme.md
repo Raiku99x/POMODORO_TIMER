@@ -218,12 +218,6 @@ Enhanced features added:
 + Better mobile responsiveness
 + Theme-aware chart rendering
 
-CREDITS & LICENSE
------------------
-Free to use for personal and commercial projects.
-Credit appreciated but not required.
-Perfect for portfolios, learning, and actual productivity!
-
 VERSION HISTORY
 ---------------
 v2.0 - Enhanced Version
@@ -258,3 +252,4 @@ and write clean, maintainable code.
 
 
 Good luck with your focused work sessions! 🍅✨
+
