@@ -1,9 +1,9 @@
-POMODORO TIMER WITH STATISTICS - ENHANCED VERSION
+POMODORO TIMER WITH STATISTICS
 ==================================================
 
 A full-featured productivity timer with task management, customizable durations, dark mode, and comprehensive analytics.
 
-NEW FEATURES (Enhanced Version)
+NEW FEATURES 
 --------------------------------
 ✨ Dark Mode - Toggle between light and dark themes
 ✨ Custom Timer Durations - Set your own work and break times
@@ -255,5 +255,6 @@ user experience.
 Perfect for demonstrating to potential employers that you
 understand web fundamentals, can build complete features,
 and write clean, maintainable code.
+
 
 Good luck with your focused work sessions! 🍅✨
