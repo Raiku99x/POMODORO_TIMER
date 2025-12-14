@@ -98,15 +98,18 @@ function saveSettings() {
     }
     
     settingsPanel.classList.add('hidden');
+    settingsBtn.classList.remove('active');
 }
 
 function cancelSettings() {
     loadSettings();
     settingsPanel.classList.add('hidden');
+    settingsBtn.classList.remove('active');
 }
 
 function toggleSettings() {
     settingsPanel.classList.toggle('hidden');
+    settingsBtn.classList.toggle('active');
 }
 
 // Task Management
@@ -148,6 +151,20 @@ function deleteTask(id) {
     renderTasks();
 }
 
+function toggleTaskComplete(id) {
+    let tasks = loadTasks();
+    const task = tasks.find(t => t.id === id);
+    
+    if (task) {
+        task.completed = !task.completed;
+        saveTasks(tasks);
+        renderTasks();
+    }
+}
+
+// Make toggleTaskComplete available globally
+window.toggleTaskComplete = toggleTaskComplete;
+
 function selectTask(id) {
     const tasks = loadTasks();
     const task = tasks.find(t => t.id === id);
@@ -169,8 +186,12 @@ function renderTasks() {
         if (currentTask && currentTask.id === task.id) {
             taskItem.classList.add('active');
         }
+        if (task.completed) {
+            taskItem.classList.add('completed');
+        }
         
         taskItem.innerHTML = `
+            <input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''} onclick="toggleTaskComplete(${task.id})">
             <span>${task.text}</span>
             <div class="task-actions">
                 <button class="task-delete" onclick="deleteTask(${task.id})">×</button>
@@ -239,11 +260,15 @@ function completeSession() {
         alert('Break complete! Ready for another session? 💪');
     }
     
-    // Auto switch mode
+   // Auto switch mode with notification
     isWorkMode = !isWorkMode;
     updateModeButtons();
     timeLeft = isWorkMode ? WORK_TIME : BREAK_TIME;
     updateDisplay();
+    
+    // Alert user about mode switch
+    const nextMode = isWorkMode ? 'Work' : 'Break';
+    console.log(`Mode switched to: ${nextMode}`);
 }
 
 function updateDisplay() {
@@ -263,7 +288,16 @@ function updateModeButtons() {
 }
 
 function playNotification() {
+    // Reset audio to beginning and play
+    notificationSound.currentTime = 0;
+    notificationSound.volume = 0.7;
     notificationSound.play().catch(err => console.log('Audio play failed:', err));
+    
+    // Visual notification fallback
+    document.body.style.backgroundColor = 'rgba(233, 69, 96, 0.1)';
+    setTimeout(() => {
+        document.body.style.backgroundColor = '';
+    }, 500);
 }
 
 // Data Management
@@ -299,6 +333,12 @@ function updateTodayStats() {
 
 // Chart Functions
 function drawChart(view) {
+    // Handle retina displays
+    const dpr = window.devicePixelRatio || 1;
+    statsCanvas.width = statsCanvas.offsetWidth * dpr;
+    statsCanvas.height = statsCanvas.offsetHeight * dpr;
+    ctx.scale(dpr, dpr);
+    
     const sessions = loadStats();
     const dates = getDatesForView(view);
     const data = dates.map(date => {
@@ -418,6 +458,7 @@ workModeBtn.addEventListener('click', () => {
         updateModeButtons();
         timeLeft = WORK_TIME;
         updateDisplay();
+        console.log('Switched to Work Mode');
     }
 });
 
@@ -427,6 +468,7 @@ breakModeBtn.addEventListener('click', () => {
         updateModeButtons();
         timeLeft = BREAK_TIME;
         updateDisplay();
+        console.log('Switched to Break Mode');
     }
 });
 
