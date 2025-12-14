@@ -675,6 +675,197 @@ body.dark-mode .btn-secondary:hover:not(:disabled) {
     opacity: 0.9;
 }
 
+/* Completion Popup Styles */
+.completion-popup {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--container-bg);
+    border: 2px solid var(--accent-color);
+    border-radius: 20px;
+    padding: 40px;
+    width: 90%;
+    max-width: 400px;
+    z-index: 1000;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    animation: popupGlowEntry 0.6s ease-out;
+}
+
+/* Popup Glow Effect & Flash */
+@keyframes popupGlowEntry {
+    0% {
+        opacity: 0;
+        transform: translate(-50%, -50%) scale(0.8);
+        box-shadow: 0 0 0 rgba(102, 126, 234, 0.8);
+    }
+    50% {
+        box-shadow: 0 0 30px rgba(102, 126, 234, 0.6);
+    }
+    100% {
+        opacity: 1;
+        transform: translate(-50%, -50%) scale(1);
+        box-shadow: 0 0 20px rgba(102, 126, 234, 0.4);
+    }
+}
+
+/* Screen Flash on Completion */
+@keyframes screenFlash {
+    0%, 100% {
+        background: linear-gradient(135deg, var(--bg-gradient-start) 0%, var(--bg-gradient-end) 100%);
+    }
+    50% {
+        background: linear-gradient(135deg, var(--accent-color) 0%, var(--accent-hover) 100%);
+    }
+}
+
+.completion-popup.flash {
+    animation: screenFlash 0.6s ease-out;
+}
+
+.completion-popup.hidden {
+    display: none;
+}
+
+.popup-content {
+    text-align: center;
+}
+
+.popup-content h2 {
+    color: var(--text-primary);
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    margin-top: 0;
+}
+
+.popup-content p {
+    color: var(--text-secondary);
+    font-size: 1.1em;
+    margin-bottom: 30px;
+}
+
+.popup-buttons {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.popup-btn {
+    padding: 15px 30px;
+    border: none;
+    border-radius: 10px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 150px;
+}
+
+.wait-btn {
+    background: #e0e0e0;
+    color: #666;
+    border: 2px solid #ddd;
+}
+
+body.dark-mode .wait-btn {
+    background: #1a3a52;
+    color: #b8b8b8;
+    border-color: #244b6e;
+}
+
+.wait-btn:hover:not(:disabled) {
+    background: #d0d0d0;
+    transform: translateY(-2px);
+}
+
+body.dark-mode .wait-btn:hover:not(:disabled) {
+    background: #244b6e;
+}
+
+.wait-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background: #c0c0c0;
+}
+
+body.dark-mode .wait-btn:disabled {
+    background: #0f3460;
+}
+
+.start-btn {
+    background: var(--accent-color);
+    color: white;
+    border: 2px solid var(--accent-color);
+}
+
+.start-btn:hover:not(:disabled) {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.start-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.popup-status {
+    margin-top: 20px;
+    padding: 15px;
+    background: var(--task-bg);
+    border-radius: 10px;
+}
+
+.popup-status.hidden {
+    display: none;
+}
+
+.popup-status p {
+    color: var(--accent-color);
+    font-weight: 600;
+    margin: 0;
+}
+
+.countdown-display {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--task-bg);
+    border-radius: 10px;
+}
+
+.countdown-display.hidden {
+    display: none;
+}
+
+.countdown-display p {
+    color: var(--text-secondary);
+    margin: 0 0 10px 0;
+    font-size: 0.9em;
+}
+
+.countdown-number {
+    font-size: 3em;
+    font-weight: 700;
+    color: var(--accent-color);
+    animation: countdownPulse 1s ease-in-out;
+}
+
+@keyframes countdownPulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2);
+    }
+}
+
+/* Dark Mode Popup */
+body.dark-mode .completion-popup {
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+}
+
 @media (max-width: 600px) {
     .splash-icon {
         font-size: 5em;
@@ -749,4 +940,27 @@ body.dark-mode .btn-secondary:hover:not(:disabled) {
         box-shadow: 0 0 15px rgba(102, 126, 234, 0.7),
                     0 0 30px rgba(102, 126, 234, 0.4),
                     0 4px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .completion-popup {
+        width: 85%;
+        padding: 30px 20px;
+    }
+    
+    .popup-content h2 {
+        font-size: 1.5em;
+    }
+    
+    .popup-content p {
+        font-size: 1em;
+    }
+    
+    .popup-btn {
+        padding: 12px 20px;
+        font-size: 0.9em;
+        max-width: 120px;
+    }
+    
+    .countdown-number {
+        font-size: 2.5em;
     }

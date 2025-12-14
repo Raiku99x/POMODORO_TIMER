@@ -87,6 +87,28 @@
                 </div>
             </div>
 
+            <!-- Session Completion Popup -->
+            <div id="completionPopup" class="completion-popup hidden">
+                <div class="popup-content">
+                    <h2 id="popupTitle">Work session complete!</h2>
+                    <p id="popupMessage">Ready for a break?</p>
+                    
+                    <div id="popupButtons" class="popup-buttons">
+                        <button id="waitBtn" class="popup-btn wait-btn">WAIT</button>
+                        <button id="startBtn2" class="popup-btn start-btn">START BREAK</button>
+                    </div>
+                    
+                    <div id="popupStatus" class="popup-status hidden">
+                        <p id="statusMessage">Waiting...</p>
+                    </div>
+                    
+                    <div id="countdownDisplay" class="countdown-display hidden">
+                        <p>Starting in...</p>
+                        <div id="countdownNumber" class="countdown-number">2</div>
+                    </div>
+                </div>
+            </div>
+            
             <div class="stats-section">
                 <div class="stats-header">
                     <h2>📊 Statistics</h2>

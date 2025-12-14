@@ -250,26 +250,112 @@ function completeSession() {
         saveSession();
         updateTodayStats();
         drawChart(weekViewBtn.classList.contains('active') ? 'week' : 'month');
-        
-        if (currentTask) {
-            alert(`Work session complete! Great work on: ${currentTask.text} 🎉`);
-        } else {
-            alert('Work session complete! Take a break! 🎉');
-        }
-    } else {
-        alert('Break complete! Ready for another session? 💪');
     }
     
-   // Auto switch mode with notification
-    isWorkMode = !isWorkMode;
-    updateModeButtons();
-    timeLeft = isWorkMode ? WORK_TIME : BREAK_TIME;
-    updateDisplay();
+    // Show popup instead of alert
+    showCompletionPopup();
+}
+
+function showCompletionPopup() {
+    const popup = document.getElementById('completionPopup');
+    const title = document.getElementById('popupTitle');
+    const message = document.getElementById('popupMessage');
+    const startBtn = document.getElementById('startBtn2');
+    
+    if (isWorkMode) {
+        title.textContent = '💼 Work session complete!';
+        message.textContent = 'Take a break?';
+        startBtn.textContent = 'START BREAK ☕';
+    } else {
+        title.textContent = '☕ Break complete!';
+        message.textContent = 'Ready for work?';
+        startBtn.textContent = 'START WORK 💼';
+    }
+    
+    // Reset buttons
+    document.getElementById('waitBtn').disabled = false;
+    document.getElementById('startBtn2').disabled = false;
+    document.getElementById('popupButtons').classList.remove('hidden');
+    document.getElementById('popupStatus').classList.add('hidden');
+    document.getElementById('countdownDisplay').classList.add('hidden');
+    
+    // Show popup with flash effect
+    popup.classList.remove('hidden');
+    popup.classList.add('flash');
+    
+    // Remove flash animation class after animation ends
+    setTimeout(() => {
+        popup.classList.remove('flash');
+    }, 600);
+}
     
     // Alert user about mode switch
     const nextMode = isWorkMode ? 'Work' : 'Break';
     console.log(`Mode switched to: ${nextMode}`);
+
+    function handleWaitClick() {
+    const waitBtn = document.getElementById('waitBtn');
+    const startBtn = document.getElementById('startBtn2');
+    const popupButtons = document.getElementById('popupButtons');
+    const popupStatus = document.getElementById('popupStatus');
+    const statusMessage = document.getElementById('statusMessage');
+    
+    // Disable both buttons
+    waitBtn.disabled = true;
+    startBtn.disabled = false;
+    
+    // Show waiting status
+    popupStatus.classList.remove('hidden');
+    statusMessage.textContent = 'Waiting...';
 }
+
+function handleStartClick() {
+    const startBtn = document.getElementById('startBtn2');
+    const popupButtons = document.getElementById('popupButtons');
+    const popupStatus = document.getElementById('popupStatus');
+    const countdownDisplay = document.getElementById('countdownDisplay');
+    
+    // Hide buttons
+    popupButtons.classList.add('hidden');
+    popupStatus.classList.add('hidden');
+    
+    // Show countdown
+    countdownDisplay.classList.remove('hidden');
+    
+    // Disable start button during countdown
+    startBtn.disabled = true;
+    
+    let countdown = 2;
+    const countdownNumber = document.getElementById('countdownNumber');
+    countdownNumber.textContent = countdown;
+    
+    const countdownInterval = setInterval(() => {
+        countdown--;
+        
+        if (countdown > 0) {
+            countdownNumber.textContent = countdown;
+        } else {
+            clearInterval(countdownInterval);
+            
+            // Close popup and start timer
+            document.getElementById('completionPopup').classList.add('hidden');
+            
+            // Switch mode and start timer
+            isWorkMode = !isWorkMode;
+            updateModeButtons();
+            timeLeft = isWorkMode ? WORK_TIME : BREAK_TIME;
+            updateDisplay();
+            startTimer();
+        }
+    }, 1000);
+}
+
+// Popup Button Listeners
+const waitBtn = document.getElementById('waitBtn');
+const startBtn2 = document.getElementById('startBtn2');
+
+waitBtn.addEventListener('click', handleWaitClick);
+startBtn2.addEventListener('click', handleStartClick);
 
 function updateDisplay() {
     const minutes = Math.floor(timeLeft / 60);
